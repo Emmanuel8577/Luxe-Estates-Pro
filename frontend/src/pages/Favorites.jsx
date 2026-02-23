@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// 1. Change this import to use your new utility
+import API from '../api'; 
 import { Link } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
 
@@ -16,12 +17,14 @@ const Favorites = () => {
       }
 
       try {
-        const res = await axios.get("http://localhost:5000/api/properties");
-        // Filter only properties whose ID is in our localStorage
+        // 2. Use the 'API' utility here. 
+        // It automatically adds the 'https://luxe-estates-pro.onrender.com/api' prefix
+        const res = await API.get("/properties");
+        
         const filtered = res.data.filter(p => savedIds.includes(p._id));
         setFavProperties(filtered);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching favorites:", err);
       } finally {
         setLoading(false);
       }
@@ -61,7 +64,7 @@ const Favorites = () => {
               </div>
               <div className="p-8">
                 <h3 className="text-2xl font-bold truncate">{p.title}</h3>
-                <p className="text-blue-600 font-black mb-6">₦{p.price}</p>
+                <p className="text-blue-600 font-black mb-6">₦{p.price.toLocaleString()}</p>
                 <Link to={`/property/${p._id}`} className="block text-center bg-gray-900 text-white py-4 rounded-2xl font-bold">View Details</Link>
               </div>
             </div>
