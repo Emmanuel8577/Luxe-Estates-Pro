@@ -1,5 +1,6 @@
 import express from 'express';
 import { createInquiry } from '../controllers/inquiryController.js';
+import { protect, adminOnly } from '../middleware/auth.js'
 
 const router = express.Router();
 
