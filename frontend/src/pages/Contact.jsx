@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import API from "../api"; // Importing the centralized API utility
+import API from "../api"; // This now works because the file exists!
 import contactUs from "../assets/contactUs.svg";
 import { FaCheckCircle, FaPaperPlane } from "react-icons/fa";
 
@@ -25,7 +25,7 @@ const Contact = () => {
     const fullName = `${formData.firstName} ${formData.lastName}`;
 
     try {
-      // Logic: Using the 'API' utility to POST to /inquiries
+      // Sending data to https://luxe-estates-pro.onrender.com/api/inquiries
       await API.post("/inquiries", {
         name: fullName,
         email: formData.email,
@@ -44,7 +44,7 @@ const Contact = () => {
 
   return (
     <div className="container mx-auto px-6 py-20 flex flex-col md:flex-row gap-16 items-center">
-      {/* Left Side */}
+      {/* Left Side: Branding */}
       <div className="md:w-1/2 text-left">
         <h2 className="text-5xl font-bold text-gray-900 mb-6 tracking-tight">
           Let's Talk About Your <br />
@@ -54,10 +54,10 @@ const Contact = () => {
           Have a specific property in mind or want to sell your estate? Our
           senior consultants are ready to assist you.
         </p>
-        <img src={contactUs} alt="Contact" className="w-64 h-auto opacity-80" />
+        <img src={contactUs} alt="Contact Illustration" className="w-64 h-auto opacity-80" />
       </div>
 
-      {/* Right Side: Form or Success Message */}
+      {/* Right Side: Form / Success Message */}
       <div className="md:w-1/2 bg-white p-10 rounded-[2.5rem] shadow-2xl border border-gray-100 min-h-[500px] flex flex-col justify-center">
         {!submitted ? (
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -109,13 +109,13 @@ const Contact = () => {
             </button>
           </form>
         ) : (
-          <div className="text-center space-y-6">
+          <div className="text-center space-y-6 animate-in zoom-in duration-300">
             <div className="flex justify-center">
               <FaCheckCircle className="text-green-500 text-8xl" />
             </div>
             <h2 className="text-3xl font-black text-gray-900">Message Received!</h2>
             <p className="text-gray-500">
-              Thank you for reaching out. One of our luxury estate agents will contact you shortly.
+              Thank you for reaching out. We will contact you at <strong>{formData.email}</strong> shortly.
             </p>
             <button onClick={() => setSubmitted(false)} className="text-blue-600 font-bold hover:underline">
               Send another message
