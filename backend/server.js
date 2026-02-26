@@ -15,6 +15,15 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(cors({
+  origin: [
+    "http://localhost:5173", 
+    "https://luxe-estates-pro.vercel.app",
+    "https://luxe-estates-jr445eg7c-emmanue-adikwus-projects.vercel.app" // Best to include your deployment link too
+  ],
+  credentials: true
+}));
+
 
 // Routes
 app.use("/api/users", authRoutes);
