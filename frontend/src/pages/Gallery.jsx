@@ -11,7 +11,7 @@ const Gallery = () => {
     const fetchData = async () => {
       try {
         // 1. Load from Backend
-        const res = await axios.get("/api/properties");
+        const res = await axios.get("/properties");
         setProperties(res.data);
 
         // 2. Sync Favorites from LocalStorage first (Instant)
@@ -21,7 +21,7 @@ const Gallery = () => {
         // 3. Sync from Server (Database) if logged in
         const token = localStorage.getItem("token");
         if (token) {
-          const userRes = await axios.get("/api/users/me", {
+          const userRes = await axios.get("/users/me", {
             headers: { Authorization: `Bearer ${token}` }
           });
           const serverFavs = userRes.data.favorites.map(f => typeof f === 'string' ? f : f._id);
@@ -55,7 +55,7 @@ const Gallery = () => {
     window.dispatchEvent(new Event("favUpdated"));
 
     try {
-      await axios.post(`/api/users/favorite/${id}`, {}, {
+      await axios.post(`/users/favorite/${id}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
     } catch (err) {

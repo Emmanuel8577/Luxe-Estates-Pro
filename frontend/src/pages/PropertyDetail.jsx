@@ -26,11 +26,11 @@ const PropertyDetail = () => {
         const token = localStorage.getItem("token");
 
         // 1. Fetch Property Data
-        const res = await axios.get(`${API_BASE}/api/properties/${id}`);
+        const res = await axios.get(`${API_BASE}/properties/${id}`);
         setProperty(res.data);
 
         // 2. Fetch Similar
-        const allRes = await axios.get(`${API_BASE}/api/properties`);
+        const allRes = await axios.get(`${API_BASE}/properties`);
         const similar = allRes.data
           .filter((p) => p._id !== id && p.location === res.data.location)
           .slice(0, 3);
@@ -38,7 +38,7 @@ const PropertyDetail = () => {
 
         // 3. User Sync & Specific Favorites
         if (token) {
-          const userRes = await axios.get(`${API_BASE}/api/users/me`, {
+          const userRes = await axios.get(`${API_BASE}/users/me`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           
@@ -85,7 +85,7 @@ const PropertyDetail = () => {
     window.dispatchEvent(new Event("favUpdated"));
 
     try {
-      await axios.post(`${API_BASE}/api/users/favorite/${id}`, {}, {
+      await axios.post(`${API_BASE}/users/favorite/${id}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
     } catch (err) { 

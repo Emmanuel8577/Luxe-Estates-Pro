@@ -19,8 +19,8 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     try {
       const [userRes, inquiryRes] = await Promise.all([
-        axios.get("/api/users", config),
-        axios.get("/api/inquiries", config),
+        axios.get("/users", config),
+        axios.get("/inquiries", config),
       ]);
       setUsers(userRes.data);
       setInquiries(inquiryRes.data);
@@ -40,7 +40,7 @@ const AdminDashboard = () => {
   const handleDeleteInquiry = async (id) => {
     if (window.confirm("Delete this inquiry?")) {
       try {
-        await axios.delete(`/api/inquiries/${id}`, config);
+        await axios.delete(`/inquiries/${id}`, config);
         setInquiries(inquiries.filter(inq => inq._id !== id));
       } catch (err) { alert("Failed to delete"); }
     }
@@ -49,7 +49,7 @@ const AdminDashboard = () => {
   const handleDeleteUser = async (id) => {
     if (window.confirm("Are you sure? This user will be removed forever.")) {
       try {
-        await axios.delete(`/api/users/${id}`, config);
+        await axios.delete(`/users/${id}`, config);
         setUsers(users.filter(u => u._id !== id));
       } catch (err) { alert("Error deleting user"); }
     }
